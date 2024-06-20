@@ -32,7 +32,7 @@ jobs:
 upstream_sync_repo: lobehub/lobe-chat
           upstream_sync_branch: main
           target_sync_branch: main
-          target_repo_token: ${{ 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 }} # automatically generated, no need to set
+          target_repo_token: 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 # automatically generated, no need to set
           test_mode: false
 
       - name: Sync check
