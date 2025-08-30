@@ -297,6 +297,10 @@ class ChatService {
       ) {
         extendParams.thinkingBudget = chatConfig.thinkingBudget;
       }
+
+      if (modelExtendParams!.includes('urlContext') && chatConfig.urlContext) {
+        extendParams.urlContext = chatConfig.urlContext;
+      }
     }
 
     return this.getChatCompletion(
@@ -361,8 +365,15 @@ class ChatService {
       ? 'responses'
       : undefined;
 
+    // Get the chat config to check streaming preference
+    const chatConfig = agentChatConfigSelectors.currentChatConfig(getAgentStoreState());
+
     const payload = merge(
-      { model: DEFAULT_AGENT_CONFIG.model, stream: true, ...DEFAULT_AGENT_CONFIG.params },
+      {
+        model: DEFAULT_AGENT_CONFIG.model,
+        stream: chatConfig.enableStreaming !== false, // Default to true if not set
+        ...DEFAULT_AGENT_CONFIG.params,
+      },
       { ...res, apiMode, model },
     );
 
